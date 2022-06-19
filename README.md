@@ -1,4 +1,4 @@
-## bno080_micro_ros2
+## bno080_micro_ros
 ROS2 driver for BNO080 interfaced with a microROS compatible micro-controller. The IMU data is acquired using this Sparkfun [Library](https://github.com/sparkfun/SparkFun_BNO080_Arduino_Library)
 
 ## 1. Installation

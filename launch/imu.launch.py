@@ -21,11 +21,11 @@ from launch.conditions import IfCondition
 
 def generate_launch_description():
     filter_config_path = PathJoinSubstitution(
-        [FindPackageShare("bno080_micro_ros2"), "config", "filter.yaml"]
+        [FindPackageShare("bno080_micro_ros"), "config", "filter.yaml"]
     )
 
     rviz_config_path = PathJoinSubstitution(
-        [FindPackageShare('bno080_micro_ros2'), 'launch', 'imu.rviz']
+        [FindPackageShare('bno080_micro_ros'), 'launch', 'imu.rviz']
     )
 
     return LaunchDescription([
