@@ -138,7 +138,7 @@ void createEntities()
     ));
     
     // create timer for actuating the motors at 50 Hz (1000/20)
-    const unsigned int sensor_timeout = 10;
+    const unsigned int sensor_timeout = 5;
     RCCHECK(rclc_timer_init_default( 
         &sensor_timer, 
         &support,
@@ -170,6 +170,7 @@ void publishData()
 
     if(imu_.dataAvailable())
     {
+        imu_msg.header.stamp.sec = time_stamp.tv_sec;
         imu_msg.header.stamp.nanosec = time_stamp.tv_nsec;
 
         imu_msg.angular_velocity.x = imu_.getGyroX();
