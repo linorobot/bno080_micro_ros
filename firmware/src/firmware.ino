@@ -32,6 +32,7 @@ byte imuCSPin = 10;
 byte imuWAKPin = 6; //IMU-PS0 pin, PS1 should be closed
 byte imuINTPin = 9;
 byte imuRSTPin = 8;
+int freq = 200;
 
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){rclErrorLoop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
@@ -74,10 +75,10 @@ void setup()
 
     delay(1);
     imu_.beginSPI(imuCSPin, imuWAKPin, imuINTPin, imuRSTPin);
-    imu_.enableRotationVector(3);
-    imu_.enableAccelerometer(3);
-    imu_.enableGyro(3); 
-    imu_.enableMagnetometer(3);
+    imu_.enableRotationVector(1000/(float)freq);
+    imu_.enableAccelerometer(1000/(float)freq);
+    imu_.enableGyro(1000/(float)freq); 
+    imu_.enableMagnetometer(1000/(float)freq);
 
     micro_ros_init_successful = false;
 
@@ -140,7 +141,7 @@ void createEntities()
     ));
     
     // create timer for actuating the motors at 50 Hz (1000/20)
-    const unsigned int sensor_timeout = 3;
+    const unsigned int sensor_timeout = 1000/(float)freq;
     RCCHECK(rclc_timer_init_default( 
         &sensor_timer, 
         &support,
