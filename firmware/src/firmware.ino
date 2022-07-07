@@ -28,6 +28,11 @@
 #include <Wire.h>
 #include "SparkFun_BNO080_Arduino_Library.h"
 
+byte imuCSPin = 10;
+byte imuWAKPin = 6; //IMU-PS0 pin, PS1 should be closed
+byte imuINTPin = 9;
+byte imuRSTPin = 8;
+
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){rclErrorLoop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
@@ -68,14 +73,11 @@ void setup()
     imu_msg.header.frame_id = micro_ros_string_utilities_set(imu_msg.header.frame_id, "imu_link");
 
     delay(1);
-    Wire.begin();
-    // imu_.begin(0x4B, Wire, 15);
-    imu_.begin();
-    Wire.setClock(400000);
-    imu_.enableRotationVector(50);
-    imu_.enableAccelerometer(50);
-    imu_.enableGyro(50); 
-    imu_.enableMagnetometer(50);
+    imu_.beginSPI(imuCSPin, imuWAKPin, imuINTPin, imuRSTPin);
+    imu_.enableRotationVector(3);
+    imu_.enableAccelerometer(3);
+    imu_.enableGyro(3); 
+    imu_.enableMagnetometer(3);
 
     micro_ros_init_successful = false;
 
@@ -138,7 +140,7 @@ void createEntities()
     ));
     
     // create timer for actuating the motors at 50 Hz (1000/20)
-    const unsigned int sensor_timeout = 5;
+    const unsigned int sensor_timeout = 3;
     RCCHECK(rclc_timer_init_default( 
         &sensor_timer, 
         &support,
