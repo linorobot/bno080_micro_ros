@@ -32,7 +32,7 @@ byte imuCSPin = 10;
 byte imuWAKPin = 6; //IMU-PS0 pin, PS1 should be closed
 byte imuINTPin = 9;
 byte imuRSTPin = 8;
-int freq = 200;
+int freq = 100;
 
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){rclErrorLoop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
@@ -84,6 +84,7 @@ void setup()
 
     Serial.begin(115200);
     set_microros_serial_transports(Serial);
+    imu_msg.orientation.w = 1;
 }
 
 void loop() 
