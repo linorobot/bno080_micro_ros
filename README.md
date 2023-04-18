@@ -17,7 +17,7 @@ ROS2 driver for BNO080 interfaced with a microROS compatible micro-controller. T
     echo "PATH=\"\$PATH:\$HOME/.platformio/penv/bin\"" >> $HOME/.bashrc
     source $HOME/.bashrc
 
-### 2.2 Install the firmware to the Atom Matrix
+### 2.2 Install the firmware to the Teensy Board
 
     cd bno080_micro_ros/firmware
     pio run --target upload
