@@ -17,10 +17,20 @@ ROS2 driver for BNO080 interfaced with a microROS compatible micro-controller. T
     echo "PATH=\"\$PATH:\$HOME/.platformio/penv/bin\"" >> $HOME/.bashrc
     source $HOME/.bashrc
 
-### 2.2 Install the firmware to the Teensy Board
+### 2.2 Install Teensy's UDEV rules:
+
+    cd /tmp
+    wget https://www.pjrc.com/teensy/00-teensy.rules
+    sudo cp 00-teensy.rules /etc/udev/rules.d/
+    udevadm control --reload-rules && udevadm trigger
+
+### 2.3 Install the firmware to the Teensy Board
 
     cd bno080_micro_ros/firmware
     pio run --target upload
+    
+* You might need to press the reset button on the Teensy if it's the first time you're uploading the firmware or when you get this error `Found device but unable to open
+`
 
 ## 3. Running the driver
 
